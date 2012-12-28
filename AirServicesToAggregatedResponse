@@ -1,0 +1,30 @@
+(:: pragma bea:global-element-parameter parameter="$oTA_AirAvailRS1" element="ns0:OTA_AirAvailRS" location="../xsd/OTA_AirAvailRS.xsd" ::)
+(:: pragma bea:global-element-parameter parameter="$oTA_AirAvailRS2" element="ns0:OTA_AirAvailRS" location="../xsd/OTA_AirAvailRS.xsd" ::)
+(:: pragma bea:global-element-return element="ns0:OTA_AirAvailRS" location="../xsd/OTA_AirAvailRS.xsd" ::)
+
+declare namespace ns0 = "http://www.opentravel.org/OTA/2003/05";
+declare namespace xf = "http://tempuri.org/switch-connector-service/transformation/AirServicesToAggregatedResponse/";
+
+declare function xf:AirServicesToAggregatedResponse($oTA_AirAvailRS1 as element(ns0:OTA_AirAvailRS),
+    $oTA_AirAvailRS2 as element(ns0:OTA_AirAvailRS))
+    as element(ns0:OTA_AirAvailRS) {
+        <ns0:OTA_AirAvailRS>
+            
+            <ns0:OriginDestinationInformation>
+                <ns0:OriginLocation LocationCode = "{ data($oTA_AirAvailRS1/ns0:OriginDestinationInformation[1]/ns0:OriginLocation/@LocationCode) }"/>
+                <ns0:DestinationLocation LocationCode = "{ data($oTA_AirAvailRS1/ns0:OriginDestinationInformation[1]/ns0:DestinationLocation/@LocationCode) }"/>
+            </ns0:OriginDestinationInformation>
+            
+            <ns0:OriginDestinationInformation>
+                <ns0:OriginLocation LocationCode = "{ data($oTA_AirAvailRS2/ns0:OriginDestinationInformation[1]/ns0:OriginLocation/@LocationCode) }"/>
+                <ns0:DestinationLocation LocationCode = "{ data($oTA_AirAvailRS2/ns0:OriginDestinationInformation[1]/ns0:DestinationLocation/@LocationCode) }"/>
+            </ns0:OriginDestinationInformation>
+            
+        </ns0:OTA_AirAvailRS>
+};
+
+declare variable $oTA_AirAvailRS1 as element(ns0:OTA_AirAvailRS) external;
+declare variable $oTA_AirAvailRS2 as element(ns0:OTA_AirAvailRS) external;
+
+xf:AirServicesToAggregatedResponse($oTA_AirAvailRS1,
+    $oTA_AirAvailRS2)
